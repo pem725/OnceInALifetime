@@ -1,0 +1,60 @@
+---
+title: "Once In A Lifetime"
+author: "pem725"
+format: html
+---
+
+I asked GPT (aka Bubba to me) to write a Python program that simulates a solitaire card game my grandmother called "Once in a Lifetime." We learned this wretched, addictive card game across generations in my family. Many of us play to this day - still awaiting that elusive "Once In A Lifetime" moment. After teaching one of the many offspring from my ever-growing family tree, a kid proclaimed that she had gotten to the promised land "several times" and that it was boring "winning" all the time. To which, I guffawed. The triumphant "girl" had just climbed through the ranks of high school, so, she knew things. What did I know? I have a quantitative background in social science and had been playing this damn card game since I was 5 years old (40 years at that time). Again, what the heck did I know? Not one of my other family members have tasted victory in the game. She could just be the luckiest damn card player on this planet - well, at least in this family. I walked away skeptical about that conclusion and figgered there was a way to prove fraud. Well, that figgerin' led me to this day - a day I shall remember fondly for some time. Here lies a simulation of the game that my good ol' buddy Bubba helped me write by asking Bubba to:
+
+> Write a python program that simulates a solitaire card game. The card game goes as follows. 1. Use all 52 cards. 2. Draw one card place down face up. 3. Draw another card and place to the right. If the new card is the same suit or same number/facecard (matching) then place the second card on top of the first. If the new card is not matching the first, draw another card and place that card to the right of the second. Compare the second and the third cards. If they are matching, place the third on top of the second. Also, now compare the new top card in the second card position to the first card. If the two cards are matching, place the right stack on the left stack. Go through the entire deck and count the number of card stacks left - that equals your final score. How many iterations do you need to get to one pile?
+
+```{python}
+import random
+
+def create_deck():
+    ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King', 'Ace']
+    suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades']
+    deck = [(rank, suit) for rank in ranks for suit in suits]
+    random.shuffle(deck)
+    return deck
+
+def is_matching(card1, card2):
+    return card1[0] == card2[0] or card1[1] == card2[1]
+
+def play_solitaire():
+    deck = create_deck()
+    left_stack = []
+    right_stack = []
+
+    # Initial draw
+    left_stack.append(deck.pop())
+
+    while deck:
+        card = deck.pop()
+        right_stack.append(card)
+
+        while len(right_stack) >= 2 and is_matching(right_stack[-1], right_stack[-2]):
+            matched_card = right_stack.pop()
+            left_stack.append(matched_card)
+
+            if is_matching(left_stack[-1], left_stack[0]):
+                left_stack.extend(right_stack)
+                right_stack = []
+
+    return len(left_stack) + len(right_stack)
+
+def main():
+    iterations_to_one_pile = 0
+    while True:
+        iterations_to_one_pile += 1
+        
+        score = play_solitaire()
+        if score == 5:
+            break
+    print("Iterations to get to ", score, "card pile:", iterations_to_one_pile)
+
+if __name__ == "__main__":
+    main()
+
+
+```
