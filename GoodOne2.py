@@ -20,7 +20,7 @@ def create_deck():
 def play_solitaire(deck):
     stacks = []
 
-    for _ in range(4):
+    for _ in range(1):
         stacks.append([deck.pop()])
 
     while deck:
