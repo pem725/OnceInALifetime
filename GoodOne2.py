@@ -51,6 +51,6 @@ while True:
 
     print("Iteration:", iterations, "Score:", score)
 
-    if score <= 3:  # Check for 2, 3, or 4 remaining stacks
+    if score < 4:  # Check for 2, 3, or 4 remaining stacks
         print("Congratulations! You achieved", score, "stacks in", iterations, "iterations.")
         break
