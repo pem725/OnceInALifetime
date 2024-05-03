@@ -28,7 +28,7 @@ def play_solitaire(deck):
 
         placed = False
         for i in range(len(stacks)):
-            if i > 2 and (card.suit == stacks[i - 3][-1].suit or card.rank == stacks[i - 3][-1].rank):
+            if i > 3 and (card.suit == stacks[i - 3][-1].suit or card.rank == stacks[i - 3][-1].rank):
                 stacks[i - 3].append(card)  # Place on stack 3 away
                 placed = True
                 break
