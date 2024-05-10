@@ -91,13 +91,14 @@ function play_game()
     return length(stacks)
 end
 
-function main(iterations::Int = nothing)
+function main(iterations::Int = 0) # see below.  Was "nothing" but now is an integer
     results = []
-    if iterations == nothing
+    if iterations == 0 # changed from "nothing" to an integer
         while true
             num_stacks = play_game()
             push!(results, num_stacks)
             if num_stacks == 1
+                println("Game Over: YOU WIN!")
                 break
             end
         end
@@ -106,6 +107,7 @@ function main(iterations::Int = nothing)
             num_stacks = play_game()
             push!(results, num_stacks)
             if num_stacks == 1
+                println("Game Over: YOU WIN!")
                 break
             end
         end
@@ -113,7 +115,7 @@ function main(iterations::Int = nothing)
 
     histogram(results, bins=collect(minimum(results):maximum(results)),
               xlabel="Number of Stacks", ylabel="Frequency",
-              title="Histogram of Number of Stacks",
+              title=cat("Histogram of Final Stacks"),
               xticks=collect(minimum(results):maximum(results)),
               alpha=0.75)
 end
