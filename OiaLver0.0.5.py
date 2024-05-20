@@ -76,6 +76,7 @@ def play_game():
 
         stacks.append(Stack())
 
+
     return len(stacks)
 
 
@@ -86,12 +87,14 @@ def main(iterations=None):
             num_stacks = play_game()
             results.append(num_stacks)
             if num_stacks == 1:
+                print("You won in ", len(results), " iterations")
                 break
     else:
         for _ in range(iterations):
             num_stacks = play_game()
             results.append(num_stacks)
             if num_stacks == 1:
+                print("You won in ", len(results), " iterations")
                 break
 
     plt.hist(results, bins=range(min(results), max(results) + 1), align='left', rwidth=0.8)
@@ -101,6 +104,8 @@ def main(iterations=None):
     plt.xticks(range(min(results), max(results) + 1))
     plt.grid(axis='y', alpha=0.75)
     plt.show()
+
+
 
 if __name__ == "__main__":
     main(iterations=10000)  # Change the number of iterations as needed
