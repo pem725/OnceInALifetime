@@ -43,10 +43,6 @@ def check_matching_stacks(stacks, index):
             return i
     return -1
 
-
-
-
-
 def play_game():
     deck = Deck()
     stacks = [Stack()]
