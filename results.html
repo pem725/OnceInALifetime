@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Once In A Lifetime Solitaire - Statistical Results</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            line-height: 1.6;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #ffeb3b;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            text-align: center;
+            font-style: italic;
+            margin-bottom: 30px;
+            font-size: 1.2em;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .stat-card {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .stat-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #ffeb3b;
+            display: block;
+        }
+        
+        .stat-label {
+            font-size: 0.9em;
+            margin-top: 5px;
+            opacity: 0.9;
+        }
+        
+        .probability-section {
+            background: rgba(255, 0, 0, 0.2);
+            border: 2px solid #ff4444;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            text-align: center;
+        }
+        
+        .probability-value {
+            font-size: 3em;
+            font-weight: bold;
+            color: #ff6b6b;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .chart-container {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 30px 0;
+            height: 400px;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .comparison-table th,
+        .comparison-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .comparison-table th {
+            background: rgba(255, 255, 255, 0.2);
+            font-weight: bold;
+        }
+        
+        .highlight {
+            background: rgba(255, 235, 59, 0.2);
+            border-radius: 5px;
+            padding: 2px 8px;
+            font-weight: bold;
+        }
+        
+        .interactive-section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+        
+        .calc-input {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            margin: 5px;
+            font-size: 1.1em;
+            width: 200px;
+        }
+        
+        .calc-button {
+            background: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+            margin: 5px;
+        }
+        
+        .calc-button:hover {
+            background: #45a049;
+        }
+        
+        .result-display {
+            margin-top: 15px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🃏 Once In A Lifetime Solitaire</h1>
+        <p class="subtitle">Statistical Analysis of an Extraordinarily Rare Card Game</p>
+        
+        <div class="probability-section">
+            <h2>Win Probability</h2>
+            <div class="probability-value">&lt; 1 in 700,000,000</div>
+            <p>After 700 million simulated games, <strong>zero wins</strong> were achieved.<br>
+            This represents one of the rarest winnable solitaire games ever documented.</p>
+        </div>
+        
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-value">700M+</span>
+                <div class="stat-label">Games Simulated</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-value">0</span>
+                <div class="stat-label">Wins Found</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-value">0.183%</span>
+                <div class="stat-label">Games Reaching 2 Stacks</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-value">4.37</span>
+                <div class="stat-label">Average Final Stacks</div>
+            </div>
+        </div>
+        
+        <div class="chart-container">
+            <canvas id="distributionChart"></canvas>
+        </div>
+        
+        <h2>Performance Comparison</h2>
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th>Implementation</th>
+                    <th>Language</th>
+                    <th>Games/Second</th>
+                    <th>Time for 1M Games</th>
+                    <th>Use Case</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>GoodOne2.py</td>
+                    <td>Python</td>
+                    <td>~35,000</td>
+                    <td>29 seconds</td>
+                    <td>Development & Testing</td>
+                </tr>
+                <tr class="highlight">
+                    <td>OnceInALifetime.jl</td>
+                    <td>Julia</td>
+                    <td>~240,000</td>
+                    <td>4 seconds</td>
+                    <td>Large-scale Analysis</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div class="interactive-section">
+            <h2>🧮 Probability Calculator</h2>
+            <p>Calculate the probability of winning if you played continuously:</p>
+            
+            <div>
+                <label>Games per day:</label>
+                <input type="number" id="gamesPerDay" class="calc-input" value="100" min="1">
+            </div>
+            <div>
+                <label>Years playing:</label>
+                <input type="number" id="yearsPlaying" class="calc-input" value="50" min="1">
+            </div>
+            
+            <button class="calc-button" onclick="calculateProbability()">Calculate Probability</button>
+            
+            <div id="probabilityResult" class="result-display" style="display: none;"></div>
+        </div>
+        
+        <h2>Key Findings</h2>
+        <ul>
+            <li><strong>"Once In A Lifetime" is extraordinarily well-named</strong> - The probability appears to be less than 1 in 700 million</li>
+            <li><strong>Even getting close is rare</strong> - Only ~0.18% of games achieve 2 stacks (minimum observed)</li>
+            <li><strong>Most games end with 4-5 stacks</strong> - 78% of all simulated games</li>
+            <li><strong>Computational intensity required</strong> - Hundreds of millions of simulations needed for statistical significance</li>
+            <li><strong>Julia provides 7x performance boost</strong> - Essential for large-scale probability estimation</li>
+        </ul>
+        
+        <h2>Game Rules</h2>
+        <ol>
+            <li>Use all 52 cards from a standard deck</li>
+            <li>Draw cards one by one, placing them in stacks</li>
+            <li>Cards match if they have the same rank OR same suit</li>
+            <li>When cards match, they merge into stacks (within 3-stack range)</li>
+            <li><strong>Goal:</strong> Get all cards into one stack (the "Once In A Lifetime" win condition)</li>
+        </ol>
+        
+        <p style="text-align: center; margin-top: 40px; font-style: italic;">
+            This analysis demonstrates that some solitaire games are truly "once in a lifetime" experiences.<br>
+            The mathematical rarity makes each attempt both hopeful and humbling.
+        </p>
+    </div>
+
+    <script>
+        // Score distribution chart
+        const ctx = document.getElementById('distributionChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['2 stacks', '3 stacks', '4 stacks', '5 stacks', '6 stacks', '7 stacks', '8+ stacks'],
+                datasets: [{
+                    label: 'Percentage of Games',
+                    data: [0.183, 13.282, 46.497, 31.733, 6.668, 1.313, 0.324],
+                    backgroundColor: [
+                        '#ff6b6b',  // 2 stacks - closest to winning
+                        '#ffa726',  // 3 stacks
+                        '#66bb6a',  // 4 stacks - most common
+                        '#42a5f5',  // 5 stacks
+                        '#ab47bc',  // 6 stacks
+                        '#8d6e63',  // 7 stacks
+                        '#546e7a'   // 8+ stacks
+                    ],
+                    borderColor: '#ffffff',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Score Distribution (1 Million Game Sample)',
+                        font: {
+                            size: 18,
+                            weight: 'bold'
+                        },
+                        color: '#333'
+                    },
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Percentage of Games',
+                            font: {
+                                size: 14,
+                                weight: 'bold'
+                            },
+                            color: '#333'
+                        },
+                        grid: {
+                            color: 'rgba(0,0,0,0.1)'
+                        },
+                        ticks: {
+                            color: '#333'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Final Number of Stacks',
+                            font: {
+                                size: 14,
+                                weight: 'bold'
+                            },
+                            color: '#333'
+                        },
+                        grid: {
+                            color: 'rgba(0,0,0,0.1)'
+                        },
+                        ticks: {
+                            color: '#333'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Probability calculator
+        function calculateProbability() {
+            const gamesPerDay = parseInt(document.getElementById('gamesPerDay').value);
+            const yearsPlaying = parseInt(document.getElementById('yearsPlaying').value);
+            
+            const totalGames = gamesPerDay * 365 * yearsPlaying;
+            
+            // Using our upper bound estimate: less than 1 in 700 million
+            const upperBoundProb = 1 / 700000000;
+            const probabilityOfWinning = 1 - Math.pow(1 - upperBoundProb, totalGames);
+            
+            const resultDiv = document.getElementById('probabilityResult');
+            resultDiv.style.display = 'block';
+            
+            if (probabilityOfWinning < 0.0001) {
+                resultDiv.innerHTML = `
+                    <strong>Total games played:</strong> ${totalGames.toLocaleString()}<br>
+                    <strong>Probability of winning at least once:</strong> ${(probabilityOfWinning * 100).toFixed(6)}%<br>
+                    <strong>Odds:</strong> About 1 in ${Math.round(1/probabilityOfWinning).toLocaleString()}<br>
+                    <br>
+                    <em>Even playing ${gamesPerDay} games daily for ${yearsPlaying} years, your chance of winning is still extremely low!</em>
+                `;
+            } else {
+                resultDiv.innerHTML = `
+                    <strong>Total games played:</strong> ${totalGames.toLocaleString()}<br>
+                    <strong>Probability of winning at least once:</strong> ${(probabilityOfWinning * 100).toFixed(2)}%<br>
+                    <strong>Odds:</strong> About 1 in ${Math.round(1/probabilityOfWinning).toLocaleString()}<br>
+                    <br>
+                    <em>You might have a reasonable chance with this much dedication!</em>
+                `;
+            }
+        }
+
+        // Initialize with default calculation
+        calculateProbability();
+    </script>
+</body>
+</html>

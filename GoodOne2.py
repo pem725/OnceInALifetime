@@ -1,56 +1,111 @@
 import random
+from typing import List
 
 class Card:
-    def __init__(self, suit, rank):
+    def __init__(self, suit: str, rank: str):
         self.suit = suit
         self.rank = rank
 
-    def __str__(self):
-        return self.rank + " of " + self.suit
-    # ... (Card class definition remains the same)
+    def __str__(self) -> str:
+        return f"{self.rank} of {self.suit}"
+    
+    def __repr__(self) -> str:
+        return f"Card('{self.suit}', '{self.rank}')"
 
-def create_deck():
-    suits = ["Hearts", "Diamonds", "Clubs", "Spades"]
-    ranks = ["Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"]
-    deck = [Card(suit, rank) for suit in suits for rank in ranks]
-    random.shuffle(deck)
-    return deck
-    # ... (create_deck function remains the same)
+class Deck:
+    def __init__(self):
+        self.cards = self._create_deck()
+    
+    def _create_deck(self) -> List[Card]:
+        suits = ["Hearts", "Diamonds", "Clubs", "Spades"]
+        ranks = ["Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"]
+        deck = [Card(suit, rank) for suit in suits for rank in ranks]
+        random.shuffle(deck)
+        return deck
+    
+    def pop(self) -> Card:
+        return self.cards.pop()
+    
+    def __bool__(self) -> bool:
+        return len(self.cards) > 0
 
-def play_solitaire(deck):
-    stacks = []
+class Stack:
+    def __init__(self):
+        self.cards: List[Card] = []
+    
+    def add_card(self, card: Card):
+        self.cards.append(card)
+    
+    def top_card(self) -> Card:
+        return self.cards[-1] if self.cards else None
+    
+    def __len__(self) -> int:
+        return len(self.cards)
 
-    for _ in range(1):
-        stacks.append([deck.pop()])
+class Game:
+    def __init__(self):
+        self.stacks: List[Stack] = []
+    
+    def _check_matching_stacks(self, index: int) -> int:
+        """Check if stack at index can match with stacks within range (max 3 back)"""
+        for i in range(max(0, index - 3), index):
+            if (self.stacks[i].top_card() and self.stacks[index].top_card() and
+                (self.stacks[i].top_card().rank == self.stacks[index].top_card().rank or
+                 self.stacks[i].top_card().suit == self.stacks[index].top_card().suit)):
+                return i
+        return -1
+    
+    def play(self, deck: Deck) -> int:
+        self.stacks = [Stack()]
+        
+        while deck:
+            card = deck.pop()
+            current_stack = self.stacks[-1]
+            current_stack.add_card(card)
+            
+            # Keep merging stacks until no more matches are found
+            while True:
+                merged = False
+                for i in range(len(self.stacks) - 1):
+                    matching_index = self._check_matching_stacks(i)
+                    if matching_index != -1:
+                        self.stacks[matching_index].cards.extend(self.stacks[i].cards)
+                        del self.stacks[i]
+                        merged = True
+                        break
+                if not merged:
+                    break
+            
+            # Check for matches between stacks
+            for i in range(len(self.stacks)):
+                for j in range(i + 1, len(self.stacks)):
+                    matching_index = self._check_matching_stacks(j)
+                    if matching_index != -1:
+                        self.stacks[matching_index].cards.extend(self.stacks[i].cards)
+                        del self.stacks[i]
+                        break
+            
+            # Always create a new stack for the next card
+            self.stacks.append(Stack())
+        
+        return len(self.stacks)
 
-    while deck:
-        card = deck.pop()
+def main(target_score: int = 1, max_iterations: int = None) -> None:
+    game = Game()
+    iterations = 0
+    
+    while max_iterations is None or iterations < max_iterations:
+        deck = Deck()
+        score = game.play(deck)
+        iterations += 1
+        
+        print(f"Iteration: {iterations}, Score: {score}")
+        
+        if score <= target_score:
+            print(f"Congratulations! You achieved {score} stack(s) in {iterations} iterations.")
+            break
+    else:
+        print(f"Reached maximum iterations ({max_iterations}) without achieving target score.")
 
-        placed = False
-        for i in range(len(stacks)):
-            if i > 3 and (card.suit == stacks[i - 3][-1].suit or card.rank == stacks[i - 3][-1].rank):
-                stacks[i - 3].append(card)  # Place on stack 3 away
-                placed = True
-                break
-            elif i > 0 and (card.suit == stacks[i - 1][-1].suit or card.rank == stacks[i - 1][-1].rank):
-                stacks[i - 1].append(card)  # Place on adjacent stack
-                placed = True
-                break
-
-        if not placed:
-            stacks.append([card])
-
-    return len(stacks)
-
-# Main game loop
-iterations = 0
-while True:
-    deck = create_deck()
-    score = play_solitaire(deck)
-    iterations += 1
-
-    print("Iteration:", iterations, "Score:", score)
-
-    if score < 4:  # Check for 2, 3, or 4 remaining stacks
-        print("Congratulations! You achieved", score, "stacks in", iterations, "iterations.")
-        break
+if __name__ == "__main__":
+    main(target_score=1)
