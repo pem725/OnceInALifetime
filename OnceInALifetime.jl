@@ -48,20 +48,31 @@ function create_deck()
     return deck
 end
 
-# Check if stack at index can match with stacks within range (max 3 back)
+# Check if stack at index can match with adjacent stack or stack exactly 3 positions back
 function check_matching_stacks(game::Game, index::Int)
-    start_idx = max(1, index - 3)
+    current_top = top_card(game.stacks[index])
+    if isnothing(current_top)
+        return -1
+    end
     
-    for i in start_idx:(index-1)
-        top_i = top_card(game.stacks[i])
-        top_index = top_card(game.stacks[index])
-        
-        if !isnothing(top_i) && !isnothing(top_index)
-            if top_i.rank == top_index.rank || top_i.suit == top_index.suit
-                return i
-            end
+    # Check adjacent stack (1 position back)
+    if index >= 2  # Julia 1-indexed
+        adjacent_top = top_card(game.stacks[index - 1])
+        if !isnothing(adjacent_top) && 
+           (adjacent_top.rank == current_top.rank || adjacent_top.suit == current_top.suit)
+            return index - 1
         end
     end
+    
+    # Check stack exactly 3 positions back
+    if index >= 4  # Julia 1-indexed
+        third_back_top = top_card(game.stacks[index - 3])
+        if !isnothing(third_back_top) && 
+           (third_back_top.rank == current_top.rank || third_back_top.suit == current_top.suit)
+            return index - 3
+        end
+    end
+    
     return -1
 end
 

@@ -251,14 +251,63 @@
             <li><strong>Julia provides 7x performance boost</strong> - Essential for large-scale probability estimation</li>
         </ul>
         
-        <h2>Game Rules</h2>
-        <ol>
-            <li>Use all 52 cards from a standard deck</li>
-            <li>Draw cards one by one, placing them in stacks</li>
-            <li>Cards match if they have the same rank OR same suit</li>
-            <li>When cards match, they merge into stacks (within 3-stack range)</li>
-            <li><strong>Goal:</strong> Get all cards into one stack (the "Once In A Lifetime" win condition)</li>
-        </ol>
+        <h2>🃏 Game Rules with Examples</h2>
+        
+        <div style="background: rgba(255, 255, 255, 0.9); color: #333; padding: 25px; border-radius: 15px; margin: 20px 0;">
+            <ol style="font-size: 1.1em; line-height: 1.8;">
+                <li><strong>Setup:</strong> Use all 52 cards from a standard deck, shuffled</li>
+                <li><strong>Gameplay:</strong> Draw cards one by one, placing each card on a new stack</li>
+                <li><strong>Matching Rules:</strong> Cards can match if they have the same <strong>rank OR same suit</strong></li>
+                <li><strong>Position Rules:</strong> Cards can only match with:
+                    <ul style="margin: 10px 0;">
+                        <li><strong>Adjacent stacks</strong> (exactly 1 position back)</li>
+                        <li><strong>OR stacks exactly 3 positions back</strong></li>
+                    </ul>
+                </li>
+                <li><strong>Merging:</strong> When cards match, the stacks merge together</li>
+                <li><strong>Goal:</strong> Get all 52 cards into one single stack</li>
+            </ol>
+            
+            <h3 style="color: #2c5aa0; margin-top: 30px;">📋 Matching Examples</h3>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 20px;">
+                <div>
+                    <h4 style="color: #4CAF50;">✅ Valid Matches - Adjacent Stacks</h4>
+                    <div style="font-family: monospace; background: #f0f8f0; padding: 15px; border-radius: 8px; border-left: 4px solid #4CAF50;">
+                        <div style="margin-bottom: 10px;"><strong>Same Rank (any suit):</strong></div>
+                        <div>Stack 1: [K♠] ← Stack 2: [K♥] ✓</div>
+                        <div style="margin: 15px 0;"><strong>Same Suit (any rank):</strong></div>
+                        <div>Stack 1: [7♣] ← Stack 2: [Q♣] ✓</div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 style="color: #4CAF50;">✅ Valid Matches - 3 Apart</h4>
+                    <div style="font-family: monospace; background: #f0f8f0; padding: 15px; border-radius: 8px; border-left: 4px solid #4CAF50;">
+                        <div style="margin-bottom: 10px;"><strong>Same Rank (any suit):</strong></div>
+                        <div>K♠ → 2♦ → 6♣ → K♥ ✓</div>
+                        <div style="margin: 15px 0;"><strong>Same Suit (any rank):</strong></div>
+                        <div>7♣ → A♠ → 9♦ → Q♣ ✓</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 30px;">
+                <h4 style="color: #f44336;">❌ Invalid Matches</h4>
+                <div style="font-family: monospace; background: #fff0f0; padding: 15px; border-radius: 8px; border-left: 4px solid #f44336;">
+                    <div><strong>Wrong position:</strong></div>
+                    <div>K♠ → 2♦ → K♥ ✗ (only 2 apart, must be adjacent OR exactly 3 apart)</div>
+                    <div>K♠ → 2♦ → 6♣ → 9♥ → K♣ ✗ (4 apart, must be adjacent OR exactly 3 apart)</div>
+                    <div style="margin-top: 10px;"><strong>No match:</strong></div>
+                    <div>7♣ → Q♠ ✗ (different rank AND different suit)</div>
+                </div>
+            </div>
+            
+            <div style="background: #e3f2fd; padding: 20px; border-radius: 10px; margin-top: 25px; border-left: 4px solid #2196f3;">
+                <h4 style="color: #1976d2; margin-top: 0;">💡 Key Insight</h4>
+                <p style="margin-bottom: 0;">The strict position rules (only adjacent OR exactly 3 apart) combined with the requirement that all 52 cards must end up in a single stack makes this game extraordinarily difficult. This is why it's called "Once In A Lifetime" - the probability is less than 1 in 700 million!</p>
+            </div>
+        </div>
         
         <p style="text-align: center; margin-top: 40px; font-style: italic;">
             This analysis demonstrates that some solitaire games are truly "once in a lifetime" experiences.<br>

@@ -47,12 +47,25 @@ class Game:
         self.stacks: List[Stack] = []
     
     def _check_matching_stacks(self, index: int) -> int:
-        """Check if stack at index can match with stacks within range (max 3 back)"""
-        for i in range(max(0, index - 3), index):
-            if (self.stacks[i].top_card() and self.stacks[index].top_card() and
-                (self.stacks[i].top_card().rank == self.stacks[index].top_card().rank or
-                 self.stacks[i].top_card().suit == self.stacks[index].top_card().suit)):
-                return i
+        """Check if stack at index can match with adjacent stack or stack exactly 3 positions back"""
+        current_top = self.stacks[index].top_card()
+        if not current_top:
+            return -1
+        
+        # Check adjacent stack (1 position back)
+        if index >= 1:
+            adjacent_top = self.stacks[index - 1].top_card()
+            if (adjacent_top and 
+                (adjacent_top.rank == current_top.rank or adjacent_top.suit == current_top.suit)):
+                return index - 1
+        
+        # Check stack exactly 3 positions back
+        if index >= 3:
+            third_back_top = self.stacks[index - 3].top_card()
+            if (third_back_top and 
+                (third_back_top.rank == current_top.rank or third_back_top.suit == current_top.suit)):
+                return index - 3
+        
         return -1
     
     def play(self, deck: Deck) -> int:
