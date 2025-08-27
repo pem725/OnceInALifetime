@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Once In A Lifetime: The Ultimate Solitaire Challenge</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <h1 class="nav-title">🎴 Once In A Lifetime</h1>
+            <div class="nav-links">
+                <a href="#story">Story</a>
+                <a href="#rules">Rules</a>
+                <a href="#walkthrough">Game Logic</a>
+                <a href="#results">Results</a>
+                <a href="#code">Code</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">🎴 Once In A Lifetime</h1>
+            <p class="hero-subtitle">The Ultimate Solitaire Challenge</p>
+            <p class="hero-description">A multi-generational family card game that captivated players for decades - now with computational analysis to discover just how special that "once in a lifetime" moment truly is!</p>
+            <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-number">700M+</span>
+                    <span class="stat-label">Games Simulated</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">&lt; 1 in 700M</span>
+                    <span class="stat-label">Win Probability</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">240K+</span>
+                    <span class="stat-label">Games/Second</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section id="story" class="section">
+            <div class="container">
+                <h2 class="section-title">🏠 The Family Story</h2>
+                <div class="story-content">
+                    <p class="lead">This repository contains the computational analysis of a beloved family solitaire game passed down through generations. What started as a friendly family debate about the difficulty of achieving victory led to one of the most extensive card game probability studies ever conducted!</p>
+                    
+                    <div class="story-highlight">
+                        <h3>The Catalyst</h3>
+                        <p>A confident family member claimed to have won "several times" and found it "boring." With 40+ years of gameplay experience and a background in quantitative analysis, the challenge was set: <strong>prove just how extraordinary a win truly is</strong>.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="rules" class="section bg-light">
+            <div class="container">
+                <h2 class="section-title">🎯 How to Play</h2>
+                
+                <div class="rules-grid">
+                    <div class="rule-card">
+                        <div class="rule-icon">🎴</div>
+                        <h3>Setup</h3>
+                        <p>Start with a standard 52-card deck, shuffled. Your goal: Get all cards into <strong>one stack</strong>!</p>
+                    </div>
+                    
+                    <div class="rule-card">
+                        <div class="rule-icon">🎯</div>
+                        <h3>Matching Logic</h3>
+                        <p>Cards match if they have the <strong>same rank</strong> OR <strong>same suit</strong></p>
+                        <div class="example">
+                            <span class="card">♠️A</span> + <span class="card">♦️A</span> = Match! ✅<br>
+                            <span class="card">♠️A</span> + <span class="card">♠️K</span> = Match! ✅
+                        </div>
+                    </div>
+                    
+                    <div class="rule-card">
+                        <div class="rule-icon">🔄</div>
+                        <h3>Cascading Matches</h3>
+                        <p>When cards match, they stack together. New combinations may create additional matches!</p>
+                    </div>
+                </div>
+
+                <div class="scoring-system">
+                    <h3>🎖️ Scoring System</h3>
+                    <div class="scoring-grid">
+                        <div class="score-item legendary">
+                            <div class="score-icon">🏆</div>
+                            <div class="score-info">
+                                <strong>1 Stack</strong>
+                                <span>ONCE IN A LIFETIME!</span>
+                                <small>Extraordinarily Rare</small>
+                            </div>
+                        </div>
+                        <div class="score-item excellent">
+                            <div class="score-icon">🥈</div>
+                            <div class="score-info">
+                                <strong>2 Stacks</strong>
+                                <span>Legendary</span>
+                                <small>0.18% of games</small>
+                            </div>
+                        </div>
+                        <div class="score-item good">
+                            <div class="score-icon">🥉</div>
+                            <div class="score-info">
+                                <strong>3 Stacks</strong>
+                                <span>Exceptional</span>
+                                <small>13.3% of games</small>
+                            </div>
+                        </div>
+                        <div class="score-item average">
+                            <div class="score-icon">📊</div>
+                            <div class="score-info">
+                                <strong>4-5 Stacks</strong>
+                                <span>Good Game</span>
+                                <small>78% of games</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="walkthrough" class="section">
+            <div class="container">
+                <h2 class="section-title">🧠 Game Logic Walkthrough</h2>
+                <p class="section-description">Follow along as we demonstrate how the game algorithms work step-by-step</p>
+                
+                <div class="walkthrough-container">
+                    <div class="step-navigation">
+                        <button class="step-btn active" data-step="1">Step 1: Initial Deal</button>
+                        <button class="step-btn" data-step="2">Step 2: Draw & Compare</button>
+                        <button class="step-btn" data-step="3">Step 3: Stack Merge</button>
+                        <button class="step-btn" data-step="4">Step 4: Cascade Check</button>
+                        <button class="step-btn" data-step="5">Step 5: Continue Play</button>
+                    </div>
+                    
+                    <div class="step-content">
+                        <div class="step active" id="step-1">
+                            <h3>Step 1: Initial Deal</h3>
+                            <p>Draw the first card and place it face-up. This becomes our first stack.</p>
+                            <div class="game-board">
+                                <div class="stack">
+                                    <div class="card-display">♠️K</div>
+                                    <div class="stack-label">Stack 1</div>
+                                </div>
+                            </div>
+                            <div class="code-snippet">
+                                <pre><code>deck = create_shuffled_deck()
+stacks = []
+first_card = deck.pop()
+stacks.append(Stack([first_card]))</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div class="step" id="step-2">
+                            <h3>Step 2: Draw & Compare</h3>
+                            <p>Draw the next card and check if it matches any existing stack tops.</p>
+                            <div class="game-board">
+                                <div class="stack">
+                                    <div class="card-display">♠️K</div>
+                                    <div class="stack-label">Stack 1</div>
+                                </div>
+                                <div class="new-card">
+                                    <div class="card-display highlight">♣️K</div>
+                                    <div class="stack-label">New Card</div>
+                                </div>
+                            </div>
+                            <div class="match-indicator">
+                                <span class="match-text">Same Rank! ♠️K matches ♣️K</span>
+                            </div>
+                            <div class="code-snippet">
+                                <pre><code>new_card = deck.pop()
+for i, stack in enumerate(stacks):
+    if cards_match(new_card, stack.top()):
+        stack.add(new_card)
+        check_cascading_matches(i)
+        return</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div class="step" id="step-3">
+                            <h3>Step 3: Stack Merge</h3>
+                            <p>When cards match, place the new card on the existing stack.</p>
+                            <div class="game-board">
+                                <div class="stack">
+                                    <div class="card-stack">
+                                        <div class="card-display">♣️K</div>
+                                        <div class="card-display underneath">♠️K</div>
+                                    </div>
+                                    <div class="stack-label">Merged Stack</div>
+                                </div>
+                            </div>
+                            <div class="code-snippet">
+                                <pre><code>def cards_match(card1, card2):
+    return (card1.rank == card2.rank or 
+            card1.suit == card2.suit)</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div class="step" id="step-4">
+                            <h3>Step 4: Cascade Check</h3>
+                            <p>After merging, check if the new top card matches other stacks, potentially creating chain reactions.</p>
+                            <div class="game-board">
+                                <div class="stack">
+                                    <div class="card-stack">
+                                        <div class="card-display">♣️K</div>
+                                        <div class="card-display underneath">♠️K</div>
+                                    </div>
+                                    <div class="stack-label">Stack 1</div>
+                                </div>
+                                <div class="stack">
+                                    <div class="card-display">♣️7</div>
+                                    <div class="stack-label">Stack 2</div>
+                                </div>
+                            </div>
+                            <div class="match-indicator">
+                                <span class="match-text">Same Suit! ♣️K matches ♣️7</span>
+                            </div>
+                            <div class="code-snippet">
+                                <pre><code>def check_cascading_matches(changed_index):
+    for i in range(len(stacks)):
+        if i != changed_index:
+            if cards_match(stacks[changed_index].top(), 
+                          stacks[i].top()):
+                merge_stacks(changed_index, i)
+                check_cascading_matches(changed_index)</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div class="step" id="step-5">
+                            <h3>Step 5: Continue Play</h3>
+                            <p>Repeat the process for all 52 cards. The game ends when the deck is empty.</p>
+                            <div class="game-board final-board">
+                                <div class="stack">
+                                    <div class="card-stack large">
+                                        <div class="card-display">♦️3</div>
+                                        <div class="card-count">Stack 1 (23 cards)</div>
+                                    </div>
+                                </div>
+                                <div class="stack">
+                                    <div class="card-stack large">
+                                        <div class="card-display">♥️J</div>
+                                        <div class="card-count">Stack 2 (15 cards)</div>
+                                    </div>
+                                </div>
+                                <div class="stack">
+                                    <div class="card-stack large">
+                                        <div class="card-display">♠️9</div>
+                                        <div class="card-count">Stack 3 (14 cards)</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="final-score">
+                                <span class="score-text">Final Score: 3 Stacks - Exceptional Game! 🥉</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="results" class="section bg-light">
+            <div class="container">
+                <h2 class="section-title">🎊 The Remarkable Results</h2>
+                
+                <div class="results-grid">
+                    <div class="result-card highlight">
+                        <h3>Win Rate Discovery</h3>
+                        <div class="big-stat">0</div>
+                        <p>Wins in 700 million simulations</p>
+                        <div class="probability">
+                            <strong>Upper bound probability: &lt; 1 in 700 million</strong>
+                        </div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <h3>Performance Achievements</h3>
+                        <div class="performance-list">
+                            <div class="perf-item">
+                                <span class="tech">Python</span>
+                                <span class="speed">~35,000 games/sec</span>
+                            </div>
+                            <div class="perf-item highlight">
+                                <span class="tech">Julia</span>
+                                <span class="speed">~240,000 games/sec</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="distribution-section">
+                    <h3>Score Distribution (1 Million Game Sample)</h3>
+                    <div class="distribution-chart">
+                        <div class="bar-chart">
+                            <div class="bar" data-percentage="0.18" style="height: 3%;">
+                                <span class="bar-label">2 stacks<br>0.18%</span>
+                            </div>
+                            <div class="bar" data-percentage="13.28" style="height: 20%;">
+                                <span class="bar-label">3 stacks<br>13.28%</span>
+                            </div>
+                            <div class="bar" data-percentage="46.50" style="height: 70%;">
+                                <span class="bar-label">4 stacks<br>46.50%</span>
+                            </div>
+                            <div class="bar" data-percentage="31.73" style="height: 48%;">
+                                <span class="bar-label">5 stacks<br>31.73%</span>
+                            </div>
+                            <div class="bar" data-percentage="8.31" style="height: 12%;">
+                                <span class="bar-label">6+ stacks<br>8.31%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="insights-section">
+                    <h3>🔬 Scientific Insights</h3>
+                    <div class="insights-grid">
+                        <div class="insight">
+                            <h4>Why So Difficult?</h4>
+                            <ul>
+                                <li>Limited matching options (rank OR suit only)</li>
+                                <li>Sequential dependencies matter tremendously</li>
+                                <li>Cascade complexity creates unpredictable chains</li>
+                                <li>Multiple rare events must align perfectly</li>
+                            </ul>
+                        </div>
+                        <div class="insight">
+                            <h4>Mathematics of Rarity</h4>
+                            <ul>
+                                <li><strong>52!</strong> possible deck arrangements</li>
+                                <li>Complex branching state space</li>
+                                <li>Convergence requires perfect sequences</li>
+                                <li>700M+ samples provide robust bounds</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="code" class="section">
+            <div class="container">
+                <h2 class="section-title">💻 Implementations & Code</h2>
+                
+                <div class="implementations-grid">
+                    <div class="impl-card">
+                        <div class="impl-header">
+                            <h3>🐍 Python Versions</h3>
+                            <span class="impl-badge">Learning & Visualization</span>
+                        </div>
+                        <div class="impl-list">
+                            <div class="impl-item featured">
+                                <strong>OiaLver0.0.5.py</strong>
+                                <span>Most complete with matplotlib histograms</span>
+                            </div>
+                            <div class="impl-item">
+                                <strong>GoodOne2.py</strong>
+                                <span>Clean, object-oriented design</span>
+                            </div>
+                            <div class="impl-item">
+                                <strong>Evolution Series</strong>
+                                <span>0.0.1 through 0.0.4 development history</span>
+                            </div>
+                        </div>
+                        <div class="quick-start">
+                            <h4>Quick Start:</h4>
+                            <code>python OiaLver0.0.5.py</code>
+                        </div>
+                    </div>
+                    
+                    <div class="impl-card">
+                        <div class="impl-header">
+                            <h3>⚡ Julia Versions</h3>
+                            <span class="impl-badge highlight">High Performance</span>
+                        </div>
+                        <div class="impl-list">
+                            <div class="impl-item featured">
+                                <strong>OnceInALifetime.jl</strong>
+                                <span>Optimized simulation engine</span>
+                            </div>
+                            <div class="impl-item">
+                                <strong>OiaLver0.0.5.jl</strong>
+                                <span>Full-featured with plotting</span>
+                            </div>
+                        </div>
+                        <div class="quick-start">
+                            <h4>For Large Analysis:</h4>
+                            <code>julia OnceInALifetime.jl 1000000</code>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="github-section">
+                    <h3>🚀 Get Started</h3>
+                    <div class="github-links">
+                        <a href="https://github.com/pem725/OnceInALifetime" class="github-btn primary">
+                            <span class="github-icon">📁</span>
+                            View Repository
+                        </a>
+                        <a href="https://github.com/pem725/OnceInALifetime/archive/refs/heads/main.zip" class="github-btn">
+                            <span class="github-icon">⬇️</span>
+                            Download Code
+                        </a>
+                        <a href="https://github.com/pem725/OnceInALifetime/blob/main/README.md" class="github-btn">
+                            <span class="github-icon">📖</span>
+                            Read Documentation
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Once In A Lifetime</h4>
+                    <p>A computational analysis of family card game probability</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Technologies</h4>
+                    <p>Python • Julia • Statistical Analysis • GitHub Pages</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Repository</h4>
+                    <a href="https://github.com/pem725/OnceInALifetime">GitHub Repository</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p><em>"The best part about a 1-in-700-million chance? It's not zero!"</em> 🎲✨</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
