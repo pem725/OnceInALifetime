@@ -22,40 +22,39 @@ The catalyst? A confident family member claimed to have won "several times" and 
 
 1. **Initial Play**: Draw and place the first card face-up ♠️
 
-2. **Draw and Compare**: Draw the next card and place it to the right
-   ```
-   ♠️A    ♦️5
-   ```
+2. **Draw and Compare**: Draw the next card from the deck
 
-3. **Matching Logic**: Cards match if they have the **same rank** OR **same suit**
+3. **Matching Logic**: The new card is compared to existing stack tops using these rules:
+   - Cards match if they have the **same rank** OR **same suit**
+   - New cards can match with stacks in **two specific positions only**:
+     - **Adjacent stack** (immediately to the left)
+     - **Stack exactly 3 positions back** (3 positions to the left)
    
-   **Same Rank Example:**
+   **Position Rule Example** (with stacks Z, C, Y, X from left to right):
    ```
-   ♠️A + ♦️A = Match! ✅
-   ```
+   Z    C    Y    X
+   ♠️K  ♦️5  ♣️7  [New Card: ♠️A]
    
-   **Same Suit Example:**
-   ```
-   ♠️A + ♠️K = Match! ✅
-   ```
-
-4. **Stack Consolidation**: When cards match, place the new card on top:
-   ```
-   Before: ♠️A    ♦️A
-   After:  ♦️A
-           ♠️A
+   ♠️A can match with:
+   ✅ Y (adjacent): ♠️A vs ♣️7 = No match
+   ✅ Z (3 back): ♠️A vs ♠️K = Same suit! Match!
+   ❌ C (2 back): Not allowed by rules
    ```
 
-5. **Cascading Matches**: After any match, check if the new top card can match with adjacent stacks:
+4. **Player Choice**: If both positions have matches, player chooses one (but not both)
+
+5. **Stack Consolidation**: When cards match, place the new card on top:
    ```
-   ♣️5    ♦️A    →    ♦️A
-          ♠️A          ♠️A
-                      ♣️5
+   Before: ♠️K  ♦️5  ♣️7  
+   After:  ♠️A  ♦️5  ♣️7
+           ♠️K
    ```
 
-6. **Complex Matching**: The game checks matches across multiple positions, creating strategic depth
+6. **Cascading Matches**: After any match, check if stacks can now merge using the same position rules
 
-7. **Scoring**: Continue until all 52 cards are drawn. Count your final stacks - **fewer is better!**
+7. **No Match Rule**: If no valid match exists (adjacent OR 3-back), create a new stack to the right
+
+8. **Scoring**: Continue until all 52 cards are drawn. Count your final stacks - **fewer is better!**
 
 ### 🎖️ Scoring System
 
@@ -164,10 +163,12 @@ main()  # Run until first win (could take a VERY long time!)
 ## 🔬 Scientific Insights
 
 ### Why Is This Game So Difficult?
-1. **Limited Matching Options**: Only rank OR suit matching
-2. **Sequential Dependencies**: Card order matters tremendously  
-3. **Cascade Complexity**: Matches can trigger chain reactions
-4. **Probabilistic Convergence**: Getting close requires multiple rare events
+1. **Restrictive Position Rules**: Cards can ONLY match adjacent OR exactly 3 positions back - no other positions allowed
+2. **Limited Matching Options**: Only rank OR suit matching
+3. **Sequential Dependencies**: Card order matters tremendously  
+4. **Cascade Complexity**: Matches can trigger chain reactions, but still follow strict position rules
+5. **Choice Constraints**: When both positions have matches, choosing one eliminates the other opportunity
+6. **Probabilistic Convergence**: Getting close requires multiple rare events aligning perfectly
 
 ### The Mathematics of Rarity
 - **52! possible deck arrangements**: 8.07 × 10⁶⁷ combinations

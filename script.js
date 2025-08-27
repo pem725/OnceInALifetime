@@ -81,22 +81,32 @@ document.addEventListener('DOMContentLoaded', function() {
         let currentDemo = 0;
         const demos = [
             {
-                title: "Same Rank Match",
+                title: "Adjacent Position Match",
                 card1: { suit: '♠️', rank: 'K' },
                 card2: { suit: '♥️', rank: 'K' },
-                matches: true
+                matches: true,
+                position: "Adjacent (1-back)"
             },
             {
-                title: "Same Suit Match", 
+                title: "3-Back Position Match", 
                 card1: { suit: '♦️', rank: 'A' },
                 card2: { suit: '♦️', rank: '7' },
-                matches: true
+                matches: true,
+                position: "3 positions back"
             },
             {
-                title: "No Match",
+                title: "Invalid Position",
                 card1: { suit: '♣️', rank: '5' },
-                card2: { suit: '♥️', rank: '9' },
-                matches: false
+                card2: { suit: '♣️', rank: '9' },
+                matches: false,
+                position: "2-back (not allowed)"
+            },
+            {
+                title: "No Match - Valid Position",
+                card1: { suit: '♥️', rank: '3' },
+                card2: { suit: '♠️', rank: '8' },
+                matches: false,
+                position: "Adjacent position"
             }
         ];
 
@@ -108,6 +118,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     ${createCardElement(demo.card1).outerHTML}
                     <span class="vs">vs</span>
                     ${createCardElement(demo.card2).outerHTML}
+                </div>
+                <div class="position-info">
+                    <strong>Position:</strong> ${demo.position}
                 </div>
                 <div class="match-result ${demo.matches ? 'match' : 'no-match'}">
                     ${demo.matches ? '✅ Match!' : '❌ No Match'}
@@ -175,6 +188,16 @@ document.addEventListener('DOMContentLoaded', function() {
         .match-result.no-match {
             background: #fee2e2;
             color: #dc2626;
+        }
+
+        .position-info {
+            text-align: center;
+            padding: 0.75rem;
+            background: #f3f4f6;
+            border-radius: 0.375rem;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+            color: #374151;
         }
 
         .navbar {
