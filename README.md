@@ -111,11 +111,10 @@ After **700 million simulations**:
 - 🎯 **Conclusion**: "Once In A Lifetime" is *perfectly* named!
 
 #### Performance Achievements
-| Implementation | Games/Second | Best Use Case |
+| Implementation | Games/Second | Matching Logic |
 |---------------|--------------|---------------|
-| Python (OiaLver0.0.5) | ~35,000 | Learning & Visualization |
-| Python (GoodOne2) | ~35,000 | Clean Code Study |
-| **Julia** | **~240,000** | **Large-Scale Analysis** |
+| **Julia (OnceInALifetime.jl)** | **~240,000** | **Correct: adjacent + skip-two only** |
+| **Python (GoodOne2.py)** | ~35,000 | **Correct: adjacent + skip-two only** |
 
 #### Score Distribution (1 Million Game Sample)
 ```
@@ -128,25 +127,22 @@ After **700 million simulations**:
 
 ## 🗂️ Implementation Versions
 
-### 🐍 Python Implementations
-- **`OiaLver0.0.5.py`** - 🌟 Most complete with matplotlib histograms
-- **`GoodOne2.py`** - 🎯 Clean, object-oriented design
-- **`OiaLver0.0.1.py` to `0.0.4.py`** - 📚 Evolution of development
-- **Alternative versions** - Various approaches and experiments
+### ✅ Active (correct matching logic)
+- **`GoodOne2.py`** — Clean, object-oriented Python. Correctly checks only adjacent and skip-two positions.
+- **`OnceInALifetime.jl`** — High-performance Julia simulation engine. Used for the 700M-game run.
 
-### ⚡ Julia Implementations  
-- **`OnceInALifetime.jl`** - 🚀 High-performance simulation engine
-- **`OiaLver0.0.5.jl`** - 📊 Full-featured with plotting capabilities
+### ⚠️ Deprecated (incorrect matching logic — see `deprecated/README.md`)
+All other implementations have been moved to `deprecated/`. They contain bugs in the matching logic — most commonly checking all positions within 3 instead of only adjacent and skip-two. See [`deprecated/README.md`](deprecated/README.md) for details on each file's specific bug.
 
 ### 📖 Documentation
-- **`OnceInALifetime.qmd`** - 📝 Complete narrative and analysis
-- **`CLAUDE.md`** - 🤖 AI development guidance
+- **`OnceInALifetime.qmd`** — Complete narrative and analysis
+- **`CLAUDE.md`** — AI development guidance
 
 ## 🎮 Try It Yourself!
 
 ### Single Game Simulation
 ```python
-from OiaLver0_0_5 import main
+from GoodOne2 import main
 main(iterations=1)  # Play one game and see your score!
 ```
 
